@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 *.log
 npm-debug.log*
@@ -15,3 +16,4 @@ dist-ssr
 .vscode/*
 .idea
 .DS_Store
+
