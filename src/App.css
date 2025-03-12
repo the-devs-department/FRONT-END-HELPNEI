@@ -1,0 +1,4 @@
+/* apaguei os arquivos css padrão*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
