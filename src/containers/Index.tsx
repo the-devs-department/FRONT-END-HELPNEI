@@ -3,7 +3,7 @@ import "../App.css";
 
 const App: React.FC = () => {
   const bgColor = "bg-[#CFCFCF]";
-  const sectionClasses = `${bgColor} shadow-lg p-6 rounded-lg text-center`;
+  const sectionClasses = `${bgColor} shadow-lg p-6 rounded-lg text-center text-[#143357]`;
 
   return (
     <div className="">
