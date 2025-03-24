@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import CardMd from '../components/CardMd/CardMd';
 
 const App: React.FC = () => {
   return (
@@ -30,10 +31,19 @@ const App: React.FC = () => {
             <p className="text-lg">--</p>
           </div>
 
-          <div className="bg-white shadow-lg p-6 rounded-lg">
-            <h2 className="text-xl font-bold">USUARIOS IMPACTADOS</h2>
-            <p className="text-lg ">--</p>
-          </div>
+          <CardMd 
+          cardImage='../../src/images/people.png' 
+          cardNumberInfo={800} cardTextInfo='USUARIOS IMPACTADOS'></CardMd>
+
+          {/* <div className="bg-white shadow-lg p-6 rounded-lg">
+            <h2 className="text-xl font-bold ">USUARIOS IMPACTADOS</h2>
+            <p className="text-lg">--</p>
+          </div> */}
+
+
+          {/* <CardMd 
+          cardImage='../../src/images/store.png' 
+          cardNumberInfo={50} cardTextInfo='AFILIADOS TOTAIS'></CardMd> */}
 
           <div className="bg-white shadow-lg p-6 rounded-lg">
             <h2 className="text-xl font-bold">AFILIADOS TOTAIS</h2>
@@ -57,7 +67,7 @@ const App: React.FC = () => {
         </div>
       </main>
       <footer className="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 w-full">
-        <p className="text-sm">© 2025 Empresa Ficticcia. Todos os direitos reservados.</p>
+        <p className="text-sm">© 2025 Empresa Fictícia. Todos os direitos reservados.</p>
       </footer>
     </div>
   );
