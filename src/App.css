@@ -6,4 +6,6 @@
 body {
   font-family: 'Nunito', sans-serif;
   background-color: rgb(236, 236, 236);
+  margin: 0;
+  padding: 0;
 }
