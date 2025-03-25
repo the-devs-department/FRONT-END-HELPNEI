@@ -1,5 +1,6 @@
-import React from "react";
-import "../App.css";
+import React from 'react';
+import '../App.css';
+import CardMd from '../components/CardMd/CardMd';
 
 const App: React.FC = () => {
   const bgColor = "bg-[#CFCFCF]";
@@ -42,18 +43,24 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mt-8">
-          <div className={sectionClasses}>
-            <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-              <h2 className="text-xl font-bold">USUÁRIOS IMPACTADOS</h2>
-              <p className="text-lg">--</p>
-            </div>
-          </div>
-          <div className={sectionClasses}>
-            <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-              <h2 className="text-xl font-bold">AFILIADOS TOTAIS</h2>
-              <p className="text-lg">--</p>
-            </div>
+          <CardMd 
+          cardImage='../../src/images/people.png' 
+          cardNumberInfo={800} cardTextInfo='USUARIOS IMPACTADOS'></CardMd>
+
+          {/* <div className="bg-white shadow-lg p-6 rounded-lg">
+            <h2 className="text-xl font-bold ">USUARIOS IMPACTADOS</h2>
+            <p className="text-lg">--</p>
+          </div> */}
+
+
+          {/* <CardMd 
+          cardImage='../../src/images/store.png' 
+          cardNumberInfo={50} cardTextInfo='AFILIADOS TOTAIS'></CardMd> */}
+
+          <div className="bg-white shadow-lg p-6 rounded-lg">
+            <h2 className="text-xl font-bold">AFILIADOS TOTAIS</h2>
+            <p className="text-lg ">--</p>
+
           </div>
           <div className={sectionClasses}>
             <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
@@ -83,9 +90,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
-
-      {/* Rodapé */}
-      <footer className="bg-gray-800 text-white text-center p-4 bottom-0 left-0 w-full">
+      <footer className="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 w-full">
         <p className="text-sm">© 2025 Empresa Fictícia. Todos os direitos reservados.</p>
       </footer>
     </div>
