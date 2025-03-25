@@ -16,7 +16,7 @@ const App: React.FC = () => {
       {/* Conteúdo Principal */}
       <main className="flex flex-col items-center justify-center mt-20 space-y-8 my-12">
         {/* Empresa */}
-        <div className="flex flex-wrap items-center justify-center space-x-8 border-b-8 border-black w-11/12 p-12"> 
+        <div className="flex flex-wrap items-center justify-center space-x-8 border-b-8 border-black w-11/12 p-12">
           <img
             src="/img/amazonlogopreta.png"
             alt="Imagem da Empresa"
@@ -43,53 +43,44 @@ const App: React.FC = () => {
           </div>
         </div>
 
-          <CardMd 
-          cardImage='../../src/images/people.png' 
+        <CardMd
+          cardImage='../../src/images/people.png'
           cardNumberInfo={800} cardTextInfo='USUARIOS IMPACTADOS'></CardMd>
 
-          {/* <div className="bg-white shadow-lg p-6 rounded-lg">
-            <h2 className="text-xl font-bold ">USUARIOS IMPACTADOS</h2>
+
+
+        <CardMd
+          cardImage='../../src/images/store.png'
+          cardNumberInfo={50} cardTextInfo='AFILIADOS TOTAIS'></CardMd>
+
+        <div className={sectionClasses}>
+          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
+            <h2 className="text-xl font-bold">CRESCIMENTO MÉDIO</h2>
             <p className="text-lg">--</p>
-          </div> */}
-
-
-          {/* <CardMd 
-          cardImage='../../src/images/store.png' 
-          cardNumberInfo={50} cardTextInfo='AFILIADOS TOTAIS'></CardMd> */}
-
-          <div className="bg-white shadow-lg p-6 rounded-lg">
-            <h2 className="text-xl font-bold">AFILIADOS TOTAIS</h2>
-            <p className="text-lg ">--</p>
-
           </div>
-          <div className={sectionClasses}>
-            <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-              <h2 className="text-xl font-bold">CRESCIMENTO MÉDIO</h2>
-              <p className="text-lg">--</p>
+        </div>
+
+        {/* Lojas Criadas */}
+        <div className={sectionClasses}>
+          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-center gap-10 p-4 rounded-lg h-full">
+            <div>
+              <h2 className="text-[100px] font-bold">12</h2>
+              <h2 className="text-[24px] font-bold">LOJAS CRIADAS</h2>
             </div>
-          </div>
-
-          {/* Lojas Criadas */}
-          <div className={sectionClasses}>
-            <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-center gap-10 p-4 rounded-lg h-full">
-              <div>
-                <h2 className="text-[100px] font-bold">12</h2>
-                <h2 className="text-[24px] font-bold">LOJAS CRIADAS</h2>
-              </div>
-              <div>
-                <img src="/img/shopping-store.png" alt="Loja Criada" />
-              </div>
-            </div>
-          </div>
-
-          <div className={sectionClasses}>
-            <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-              <h2 className="text-xl font-bold">CIDADES ATINGIDAS</h2>
-              <p className="text-lg">--</p>
+            <div>
+              <img src="/img/shopping-store.png" alt="Loja Criada" />
             </div>
           </div>
         </div>
+
+        <div className={sectionClasses}>
+          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
+            <h2 className="text-xl font-bold">CIDADES ATINGIDAS</h2>
+            <p className="text-lg">--</p>
+          </div>
+        </div>
       </main>
+
       <footer className="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 w-full">
         <p className="text-sm">© 2025 Empresa Fictícia. Todos os direitos reservados.</p>
       </footer>
