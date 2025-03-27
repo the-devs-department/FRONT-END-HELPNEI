@@ -1,91 +1,112 @@
 import React from 'react';
 import '../App.css';
-import CardMd from '../components/CardMd/CardMd';
+import { useEffect } from "react";
+import { animateCounters } from "../utils/animateCounters";
 
 const App: React.FC = () => {
-  const bgColor = "bg-[#CFCFCF]";
-  const sectionClasses = `${bgColor} shadow-lg p-6 rounded-lg text-center text-[#143357]`;
+  useEffect(() => {
+    animateCounters();
+  }, []);
+  return(
+    <div>
 
-  return (
-    <div className="">
-      {/* Navbar */}
-      <div className="bg-gray-800 text-white p-4 fixed top-0 left-0 w-full z-10">
-        <button className="text-xl font-semibold focus:outline-none">Voltar</button>
+    <br></br>
+
+    <div className="max-w-4xl mx-auto p-6 pb-2 bg-white shadow-lg rounded-lg">
+      <div className="flex items-center justify-around border-b pb-4 gap-x-6">
+        <img src="/img/amazonlogopreta.png" alt="Amazon" className="w-[200px] h-[200px]" />
+        <div className="flex flex-col items-center">
+          <p className="text-gray-700 text-3xl leading-relaxed font-bold">Amazon</p>
+          <p className="text-gray-700 text-1xl leading-relaxed pb-3">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nulla est, porttitor eget massa nec, vehicula maximus magna. Aenean efficitur tortor ac fringilla auctor. Etiam in eros ut velit sollicitudin tincidunt. Vestibulum lobortis quis dui quis semper. Phasellus vestibulum maximus tempor. Sed vel eros consequat, sodales turpis pharetra, molestie purus. In interdum porttitor urna, eu facilisis mauris interdum in. Suspendisse turpis neque, laoreet sed imperdiet mattis, venenatis pretium odio.
+          </p>
+        </div>
+      </div>
+ 
+      <h2 className="text-2xl font-bold mt-6 text-center border-b pb-6">IMPACTO DA EMPRESA</h2>
+ 
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        <div className="bg-gray-300 p-10 shadow-lg rounded-lg text-center flex items-center justify-around col-span-2 gap-x-6 transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/mapaicon.png" alt="Ícone" className="w-24 h-24" />
+          <div className="flex flex-col items-center">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="125000">0</p>
+            <p className="font-semibold text-[23px]">CIDADES ATENDIDAS</p>
+          </div>
+          <img src="/img/mapaicon.png" alt="Ícone" className="w-24 h-24" />
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-300 p-10   rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/usuarioicon.png" alt="Ícone" className="w-32 h-32 absolute bottom-6 right-9" />
+          <div className="text-left">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="1200">0</p>
+            <p className="font-semibold text-[23px]">USUÁRIOS TOTAIS</p>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-300 p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/afiliados.png" alt="Ícone" className="w-32 h-32 absolute bottom-6 right-9" />
+          <div className="text-left">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="800">0</p>
+            <p className="font-semibold text-[23px]">AFILIADOS TOTAIS</p>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-300 p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/graficoicon.png" alt="Ícone" className="w-24 h-24 absolute bottom-11 right-9" />
+          <div className="text-left">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="75" data-suffix="%">0%</p>
+            <p className="font-semibold text-[23px]">CRESCIMENTO MÉDIO</p>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-300 p-10 rounded-lg shadow-md flex justify-start relative transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/shopping-store.png" alt="Ícone" className="w-32 h-32 absolute bottom-8 right-10" />
+          <div className="text-left">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="150">0</p>
+            <p className="font-semibold text-[23px]">LOJAS CRIADAS</p>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-300 p-10 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/brasil.png" alt="Ícone" className="w-15 h-15 mb-2 max-w-full" />
+          <div className="flex flex-col items-center justify-center gap-y-4">
+            <p className="text-gray-800 text-5xl font-bold counter" data-count="48">0</p>
+            <p className="font-semibold text-2xl">CIDADES ATINGIDAS (SP)</p>
+          </div>
+          <img src="/img/brsp.png" alt="Ícone" className="w-15 h-15 mb-2 max-w-full" />
+          <img src="/img/filtro.png" alt="Ícone" className="w-7 h-7 absolute top-10 right-10" />
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+      </div>
+ 
+      <div className="flex items-center justify-center pt-4 gap-x-12 col-span-2">
+        <a href="https://www.linkedin.com/company/amazon/posts/?feedView=all" target="_blank">
+          <img src="/img/linkedin.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+        </a>
+        <a href="https://www.instagram.com/amazonbrasil/" target="_blank">
+          <img src="/img/instagram.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+        </a>
+        <a href="https://www.amazon.com.br/" target="_blank">
+          <img src="/img/www.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+        </a>
       </div>
 
-      {/* Conteúdo Principal */}
-      <main className="flex flex-col items-center justify-center mt-20 space-y-8 my-12">
-        {/* Empresa */}
-        <div className="flex flex-wrap items-center justify-center space-x-8 border-b-8 border-black w-11/12 p-12">
-          <img
-            src="/img/amazonlogopreta.png"
-            alt="Imagem da Empresa"
-            className="w-40 h-40 object-contain"
-          />
-          <div className="max-w-2xl">
-            <h1 className="text-4xl font-bold text-gray-900">Amazon</h1>
-            <p className="text-lg text-gray-700 mt-4 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magnam voluptatum
-              commodi dolor, ullam veritatis distinctio laborum doloremque veniam deleniti itaque
-              impedit atque labore dicta dolore. Deserunt obcaecati hic adipisci?
-            </p>
-          </div>
-        </div>
-
-        {/* Impacto da Empresa */}
-        <h2 className="text-3xl font-bold mt-8">IMPACTO DA EMPRESA</h2>
-
-        {/* Estatísticas */}
-        <div className={`${sectionClasses} w-full max-w-6xl`}>
-          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-            <h2 className="text-xl font-bold">CIDADES ATENDIDAS</h2>
-            <p className="text-lg">--</p>
-          </div>
-        </div>
-
-        <CardMd
-          cardImage='../../src/images/people.png'
-          cardNumberInfo={800} cardTextInfo='USUARIOS IMPACTADOS'></CardMd>
-
-
-
-        <CardMd
-          cardImage='../../src/images/store.png'
-          cardNumberInfo={50} cardTextInfo='AFILIADOS TOTAIS'></CardMd>
-
-        <div className={sectionClasses}>
-          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-            <h2 className="text-xl font-bold">CRESCIMENTO MÉDIO</h2>
-            <p className="text-lg">--</p>
-          </div>
-        </div>
-
-        {/* Lojas Criadas */}
-        <div className={sectionClasses}>
-          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-center gap-10 p-4 rounded-lg h-full">
-            <div>
-              <h2 className="text-[100px] font-bold">12</h2>
-              <h2 className="text-[24px] font-bold">LOJAS CRIADAS</h2>
-            </div>
-            <div>
-              <img src="/img/shopping-store.png" alt="Loja Criada" />
-            </div>
-          </div>
-        </div>
-
-        <div className={sectionClasses}>
-          <div className="border-t-8 border-b-8 border-[#143357] flex items-center justify-between p-4 rounded-lg h-full">
-            <h2 className="text-xl font-bold">CIDADES ATINGIDAS</h2>
-            <p className="text-lg">--</p>
-          </div>
-        </div>
-      </main>
-
-      <footer className="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 w-full">
-        <p className="text-sm">© 2025 Empresa Fictícia. Todos os direitos reservados.</p>
-      </footer>
     </div>
+
+    </div>
+
   );
 };
-
+ 
 export default App;
