@@ -1,13 +1,39 @@
-import React from 'react';
-import '../App.css';
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import "../App.css";
 import { animateCounters } from "../utils/animateCounters";
+import Brazil from "@react-map/brazil";
 
 const App: React.FC = () => {
+  const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [mapSize, setMapSize] = useState(250); 
+
   useEffect(() => {
     animateCounters();
+
+    
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setMapSize(180); 
+      } else if (window.innerWidth <= 480) {
+        setMapSize(140);
+      } else {
+        setMapSize(250);
+      }
+    };
+
+    
+    window.addEventListener("resize", handleResize);
+    handleResize(); 
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return(
+
+  function handleSelect(state: string): void {
+    console.log("Estado selecionado:", state);
+    setSelectedState(state);
+  }
+
+  return (
     <div>
 
     <br></br>
@@ -77,34 +103,47 @@ const App: React.FC = () => {
           <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
         </div>
  
-        <div className="bg-gray-300 p-10 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative transition-transform transform hover:scale-105 cursor-pointer">
-          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
-          <img src="/img/brasil.png" alt="Ícone" className="w-15 h-15 mb-2 max-w-full" />
-          <div className="flex flex-col items-center justify-center gap-y-4">
-            <p className="text-gray-800 text-5xl font-bold counter" data-count="48">0</p>
-            <p className="font-semibold text-2xl">CIDADES ATINGIDAS (SP)</p>
+        <div className="bg-gray-300 p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative ">
+        <div className="flex flex-col items-center justify-center gap-y-4">
+            <p className="text-gray-800 text-8xl font-bold counter" data-count="5569">0</p>
+            <p className="font-semibold text-2xl">CIDADES ATINGIDAS</p>
+            <p className="text-lg text-[#143357] font-bold">Estado: {selectedState ? selectedState : "--"}</p>
           </div>
-          <img src="/img/brsp.png" alt="Ícone" className="w-15 h-15 mb-2 max-w-full" />
-          <img src="/img/filtro.png" alt="Ícone" className="w-7 h-7 absolute top-10 right-10" />
-          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <div className="absolute top-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
+          <Brazil
+              onSelect={(state) => handleSelect(state as string)}
+              size={mapSize} 
+              mapColor="#143357" 
+              strokeColor="white"       
+              hoverColor="#B107"    
+              type="select-single"
+              selectColor="#B1070A"
+              hints={true}
+            />
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
         </div>
       </div>
  
       <div className="flex items-center justify-center pt-4 gap-x-12 col-span-2">
         <a href="https://www.linkedin.com/company/amazon/posts/?feedView=all" target="_blank">
-          <img src="/img/linkedin.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+          <img src="img/linkedin.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
         </a>
         <a href="https://www.instagram.com/amazonbrasil/" target="_blank">
-          <img src="/img/instagram.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+          <img src="img/instagram.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
         </a>
         <a href="https://www.amazon.com.br/" target="_blank">
-          <img src="/img/www.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
+          <img src="img/www.png" alt="Ícone" className="w-9 h-9 transition-transform transform hover:scale-110 cursor-pointer" />
         </a>
       </div>
-
+ 
+      <div className="w-full max-w-none text-center mt-3 border-t pt-2 pb-0" style={{ width: "calc(100% + 48px)", marginLeft: "-24px" }}>
+        <p className="text-gray-600 font-semibold">Helpnei</p>
+      </div>
     </div>
 
     </div>
+
+    
 
   );
 };
