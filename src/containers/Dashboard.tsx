@@ -2,30 +2,37 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { animateCounters } from "../utils/animateCounters";
 import Brazil from "@react-map/brazil";
+import { Link } from 'react-router-dom';
 
-const App: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
   const [mapSize, setMapSize] = useState(250); 
 
   useEffect(() => {
-    animateCounters();
-
     
+    document.body.classList.add('dashboard-body');
+    
+    animateCounters();
+  
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setMapSize(180); 
-      } else if (window.innerWidth <= 480) {
+      if (window.innerWidth <= 480) {
         setMapSize(140);
+      } else if (window.innerWidth <= 768) {
+        setMapSize(180);
       } else {
         setMapSize(250);
       }
     };
-
+  
     
     window.addEventListener("resize", handleResize);
-    handleResize(); 
-
-    return () => window.removeEventListener("resize", handleResize);
+    handleResize();
+  
+    
+    return () => {
+      document.body.classList.remove('dashboard-body');
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   function handleSelect(state: string): void {
@@ -38,10 +45,12 @@ const App: React.FC = () => {
 
     <br></br>
   
-    <div className="max-w-4xl mx-auto p-6 pb-2 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <Link to="/" className="bg-white border border-blue-800 text-blue-800 font-bold py-2 px-3 rounded-md hover:bg-blue-50 transition">&larr; Voltar</Link>
       <div className="flex items-center justify-around border-b pb-4 gap-x-6">
+      
         <img src="/img/amazonlogopreta.png" alt="Amazon" className="logo w-[200px] h-[200px]" />
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center">         
           <p className="text-gray-700 text-3xl leading-relaxed font-bold">Amazon</p>
           <p className="text-gray-700 text-1xl leading-relaxed pb-3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nulla est, porttitor eget massa nec, vehicula maximus magna. Aenean efficitur tortor ac fringilla auctor. Etiam in eros ut velit sollicitudin tincidunt. Vestibulum lobortis quis dui quis semper. Phasellus vestibulum maximus tempor. Sed vel eros consequat, sodales turpis pharetra, molestie purus. In interdum porttitor urna, eu facilisis mauris interdum in. Suspendisse turpis neque, laoreet sed imperdiet mattis, venenatis pretium odio.
@@ -136,16 +145,14 @@ const App: React.FC = () => {
         </a>
       </div>
   
-      <div className="w-full max-w-none text-center mt-3 border-t pt-2 pb-0">
-        <p className="text-gray-600 font-semibold">Helpnei</p>
-      </div>
+      <footer className="flex justify-center items-center w-full h-12 fixed bottom-0 left-0 bg-blue-900 text-white py-4">
+          <span className="font-bold text-xl">Helpnei</span>
+        </footer>
     </div>
 
     </div>
-
-    
 
   );
 };
  
-export default App;
+export default Dashboard;

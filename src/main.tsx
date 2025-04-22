@@ -1,12 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './containers/Index'
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Dashboard from './containers/Dashboard'
+import CadastroPage from './containers/Cadastro';
+import ScrollToTop from './components/ScrollToTop';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-) 
-
-// parte doque será renderizado, vc coloca a 'rota'
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<CadastroPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
+);
