@@ -1,0 +1,38 @@
+#root{
+  width: 100%;
+  height: 100dvh;
+}
+
+body{
+  padding: 0;
+}
+
+.company_group{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  height: auto;
+  width: 100%;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.logo_helpnei{
+  height: 100%;
+  width: 5rem;
+}
+.company{
+  transition: .5s;
+}
+
+.company:hover{
+  transform: scale(1.05);
+}
+
+.company_logo{
+  height: 100%;
+  /* width: 100%; */
+  object-fit: contain;
+}
