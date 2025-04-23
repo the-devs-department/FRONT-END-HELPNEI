@@ -18,7 +18,7 @@ const CadastroPage: React.FC = () => {
       <div className="bg-white max-w-2xl w-full p-6 shadow-lg rounded-lg">
 
         
-        <h1 className="text-3xl font-bold text-center text-blue-900 mb-4">
+        <h1 className="text-3xl font-bold text-center text-[var(--color-blue-primary)] mb-4">
           Cadastro de Usuário
         </h1>
         <p className="text-center text-sm mb-10">
@@ -36,95 +36,95 @@ const CadastroPage: React.FC = () => {
         <form className="space-y-6 bg-gray-100 shadow-lg p-6 rounded-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block font-bold text-blue-900">Nome</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Nome</label>
               <input
                 type="text"
                 placeholder="Digite seu nome"
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div>
-              <label className="block font-bold text-blue-900">CPF</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">CPF</label>
               <input
                 type="text"
                 placeholder="XXX.XXX.XXX-XX"
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
     
             
 
             <div>
-              <label className="block font-bold text-blue-900">Renda Familiar</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Renda Familiar</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
                 <option value="ate1">Até 1 salário</option>
                 <option value="ate3">Até 3 salários</option>
                 <option value="mais3">Mais de 3 salários</option>
               </select>
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div>
-              <label className="block font-bold text-blue-900">Sexo</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Sexo</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
                 <option value="feminino">Feminino</option>
                 <option value="masculino">Masculino</option>
                 <option value="outro">Outro</option>
               </select>
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
           </div>
 
-          <div className="text-center font-bold text-lg mt-6 text-blue-900">Endereço</div>
+          <div className="text-center font-bold text-lg mt-6 text-[var(--color-blue-primary)]">Endereço</div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block font-bold text-blue-900">Logradouro</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Logradouro</label>
               <input
                 type="text"
                 placeholder="Rua, Avenida..."
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div>
-              <label className="block font-bold text-blue-900">Número</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Número</label>
               <input
                 type="text"
                 placeholder="Ex: 123"
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div>
-              <label className="block font-bold text-blue-900">Complemento</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Complemento</label>
               <input
                 type="text"
                 placeholder="Perto de..."
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div>
-              <label className="block font-bold text-blue-900">Cidade</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Cidade</label>
               <input
                 type="text"
                 placeholder="Sua cidade"
                 className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2"
               />
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block font-bold text-blue-900">Estado</label>
+              <label className="block font-bold text-[var(--color-blue-primary)]">Estado</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
                 <option value="SP">SP</option>
@@ -132,12 +132,12 @@ const CadastroPage: React.FC = () => {
                 <option value="MG">MG</option>
                 <option value="RS">RS</option>
               </select>
-              <hr className="border-t-4 border-blue-900 mt-2" />
+              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
           </div>
 
           <div className="text-center py-3">
-            <Link to="/dashboard" className="bg-blue-800 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-900 transition">Cadastrar</Link>
+            <Link to="/dashboard" className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition">Cadastrar</Link>
           </div>
         </form>
 

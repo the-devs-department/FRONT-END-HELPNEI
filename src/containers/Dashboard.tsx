@@ -39,50 +39,52 @@ const Dashboard: React.FC = () => {
     console.log("Estado selecionado:", state);
     setSelectedState(state);
   }
-
+//bg-[var(--color-blue-primary)]
   return (
     <div>
+<div className="flex justify-start">
+  <Link to="/" className="bg-white text-left border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-3 rounded-md hover:bg-blue-50 transition">&larr; Voltar</Link>
+</div>
 
-    <br></br>
-  
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-    <Link to="/" className="bg-white border border-blue-800 text-blue-800 font-bold py-2 px-3 rounded-md hover:bg-blue-50 transition">&larr; Voltar</Link>
-      <div className="flex items-center justify-around border-b pb-4 gap-x-6">
+<div className="max-w-4xl mx-auto p-6 pb-2 rounded-lg mt-4">
+  <div className="flex items-center justify-around border-b pb-4 gap-x-6">
+
+
       
-        <img src="/img/amazonlogopreta.png" alt="Amazon" className="logo w-[200px] h-[200px]" />
-        <div className="flex flex-col items-center">         
+ <img src="/img/amazonlogopreta.png" alt="Amazon" className="logo w-[200px] h-[200px]" />
+        <div className="flex flex-col items-center">
           <p className="text-gray-700 text-3xl leading-relaxed font-bold">Amazon</p>
           <p className="text-gray-700 text-1xl leading-relaxed pb-3">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nulla est, porttitor eget massa nec, vehicula maximus magna. Aenean efficitur tortor ac fringilla auctor. Etiam in eros ut velit sollicitudin tincidunt. Vestibulum lobortis quis dui quis semper. Phasellus vestibulum maximus tempor. Sed vel eros consequat, sodales turpis pharetra, molestie purus. In interdum porttitor urna, eu facilisis mauris interdum in. Suspendisse turpis neque, laoreet sed imperdiet mattis, venenatis pretium odio.
+          A Amazon é uma das maiores empresas de tecnologia e comércio eletrônico do mundo, fundada por Jeff Bezos em 1994, inicialmente como uma livraria online. Com o tempo, expandiu seu catálogo para incluir uma ampla variedade de produtos, tornando-se referência global em e-commerce. Além do varejo, a Amazon atua em setores como computação em nuvem, por meio da Amazon Web Services (AWS), inteligência artificial, streaming (Amazon Prime Video) e dispositivos eletrônicos, como os da linha Alexa. A empresa é reconhecida pela sua logística eficiente, inovação constante e foco na experiência do cliente. Seu modelo de negócios influencia profundamente o mercado global, e ela continua sendo uma das marcas mais valiosas do mundo. A sede da empresa está localizada em Seattle, nos Estados Unidos.
           </p>
         </div>
       </div>
  
       <h2 className="text-2xl font-bold mt-6 text-center border-b pb-6">IMPACTO DA EMPRESA</h2>
- 
+        {/* dashbord metricas*/}
       <div className="grid grid-cols-2 gap-4 mt-6">
-        <div className="cidade bg-gray-300 p-10 shadow-lg rounded-lg text-center flex items-center justify-around col-span-2 gap-x-6 transition-transform transform hover:scale-105 cursor-pointer">
+        <div className="bg-gray-100 p-10 shadow-lg rounded-lg text-center flex items-center justify-around col-span-2 gap-x-6 transition-transform transform hover:scale-105 cursor-pointer">
           <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
-          <img src="/img/mapaicon.png" alt="Ícone" className="w-24 h-24" />
+          <img src="/img/usuarioicon.png" alt="Ícone" className="w-24 h-24" />
           <div className="cidadetext flex flex-col items-center">
-            <p className="text-gray-800 text-[50px] font-bold counter" data-count="125000">0</p>
-            <p className="font-semibold text-[20px]">CIDADES ATENDIDAS</p>
-          </div>
-          <img src="/img/mapaicon.png" alt="Ícone" className="w-24 h-24" />
-          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
-        </div>
- 
-        <div className="bg-gray-300 p-10   rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
-          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
-          <img src="/img/usuarioicon.png" alt="Ícone" className="w-32 h-32 custom-absolute" />
-          <div className="text-left">
             <p className="text-gray-800 text-[50px] font-bold counter" data-count="1200">0</p>
-            <p className="font-semibold text-[17px]">USUÁRIOS TOTAIS</p>
+            <p className="font-semibold text-[20px]">USUÁRIOS TOTAIS</p>
+          </div>
+          <img src="/img/usuarioicon.png" alt="Ícone" className="w-24 h-24" />
+          <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+        </div>
+ 
+        <div className="bg-gray-100 p-10   rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+          <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
+          <img src="/img/mapaicon.png" alt="Ícone" className="w-32 h-32 custom-absolute" />
+          <div className="text-left">
+            <p className="text-gray-800 text-[50px] font-bold counter" data-count="125000">0</p>
+            <p className="font-semibold text-[17px]">CIDADES ATENDIDAS</p>
           </div>
           <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
         </div>
  
-        <div className="bg-gray-300 p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+        <div className="bg-gray-100  p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
           <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
           <img src="/img/afiliados.png" alt="Ícone" className="w-32 h-32 custom-absolute" />
           <div className="text-left">
@@ -92,7 +94,7 @@ const Dashboard: React.FC = () => {
           <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
         </div>
  
-        <div className="bg-gray-300 p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
+        <div className="bg-gray-100  p-10 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer">
           <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
           <img src="/img/graficoicon.png" alt="Ícone" className="w-24 h-24 custom-absolute2" />
           <div className="text-left">
@@ -102,7 +104,7 @@ const Dashboard: React.FC = () => {
           <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
         </div>
  
-        <div className="bg-gray-300 p-10 rounded-lg shadow-md flex justify-start relative transition-transform transform hover:scale-105 cursor-pointer">
+        <div className="bg-gray-100  p-10 rounded-lg shadow-md flex justify-start relative transition-transform transform hover:scale-105 cursor-pointer">
           <div className="absolute top-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
           <img src="/img/shopping-store.png" alt="Ícone" className="w-32 h-32 custom-absolute" />
           <div className="text-left">
@@ -112,7 +114,7 @@ const Dashboard: React.FC = () => {
           <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
         </div>
  
-        <div className="mapa bg-gray-300 p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative ">
+        <div className="mapa bg-gray-100  p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative ">
         <div className="mapatext flex flex-col items-center justify-center gap-y-4">
             <p className="text-gray-800 text-8xl font-bold counter" data-count="5569">0</p>
             <p className="font-semibold text-2xl">CIDADES ATINGIDAS</p>
@@ -145,14 +147,17 @@ const Dashboard: React.FC = () => {
         </a>
       </div>
   
-      <footer className="flex justify-center items-center w-full h-12 fixed bottom-0 left-0 bg-blue-900 text-white py-4">
-          <span className="font-bold text-xl">Helpnei</span>
-        </footer>
+      <div className="w-full max-w-none text-center mt-3 border-t pt-2 pb-0">
+        <p className="text-gray-600 font-semibold">Helpnei</p>
+      </div>
     </div>
 
     </div>
+
+    
 
   );
 };
+
  
 export default Dashboard;
