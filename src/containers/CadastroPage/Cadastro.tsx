@@ -1,6 +1,6 @@
 import React, { useEffect} from 'react';
-import "../App.css";
 import { Link } from 'react-router-dom'
+import LogoHelpnei from '../../images/logoHelpnei.webp'
 
 
 const CadastroPage: React.FC = () => {
@@ -11,13 +11,9 @@ const CadastroPage: React.FC = () => {
     };
   }, []);
 
-  
-
   return (
     <div className="bg-F5F5F5 text-black font-sans min-h-screen flex items-center justify-center p-6">
       <div className="bg-white max-w-2xl w-full p-6 shadow-lg rounded-lg">
-
-        
         <h1 className="text-3xl font-bold text-center text-[var(--color-blue-primary)] mb-4">
           Cadastro de Usuário
         </h1>
@@ -32,10 +28,9 @@ const CadastroPage: React.FC = () => {
           , de acordo com o seu{' '}
           <span className="text-blue-900 font-bold">perfil</span>!
         </p>
-
         <form className="space-y-6 bg-gray-100 shadow-lg p-6 rounded-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-2 gap-6">
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Nome</label>
               <input
                 type="text"
@@ -44,8 +39,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">CPF</label>
               <input
                 type="text"
@@ -54,10 +48,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-    
-            
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Renda Familiar</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
@@ -67,8 +58,7 @@ const CadastroPage: React.FC = () => {
               </select>
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Sexo</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
@@ -79,11 +69,9 @@ const CadastroPage: React.FC = () => {
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
           </div>
-
           <div className="text-center font-bold text-lg mt-6 text-[var(--color-blue-primary)]">Endereço</div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-2 gap-6">
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Logradouro</label>
               <input
                 type="text"
@@ -92,8 +80,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Número</label>
               <input
                 type="text"
@@ -102,8 +89,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Complemento</label>
               <input
                 type="text"
@@ -112,8 +98,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div>
+            <div className='max-[575px]:col-span-2'>
               <label className="block font-bold text-[var(--color-blue-primary)]">Cidade</label>
               <input
                 type="text"
@@ -122,8 +107,7 @@ const CadastroPage: React.FC = () => {
               />
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
-
-            <div className="md:col-span-2">
+            <div className="max-[575px]:col-span-2">
               <label className="block font-bold text-[var(--color-blue-primary)]">Estado</label>
               <select className="w-full bg-white border border-gray-300 rounded-md focus:ring focus:ring-blue-300 text-sm p-2">
                 <option disabled selected>Selecionar</option>
@@ -135,14 +119,12 @@ const CadastroPage: React.FC = () => {
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
           </div>
-
           <div className="text-center py-3">
-            <Link to="/dashboard" className="bg-blue-900 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition">Cadastrar</Link>
+            <Link to="/home" className="bg-blue-950 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-900 transition">Cadastrar</Link>
           </div>
         </form>
-
-        <footer className="flex justify-center items-center w-full h-12 fixed bottom-0 left-0 bg-blue-900 text-white py-4">
-          <span className="font-bold text-xl">Helpnei</span>
+        <footer className="flex justify-center items-center w-full h-12 fixed bottom-0 left-0 bg-blue-950 text-white py-4">
+          <img src={LogoHelpnei} alt="" className='h-[100%] object-contain'/>
         </footer>
       </div>
     </div>
