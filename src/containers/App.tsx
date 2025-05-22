@@ -12,13 +12,13 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CadastroPage />} />
+        <Route path="/cadastro" element={<CadastroPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         
         {/* Rota protegida */}
         <Route
-          path="/home"
+          path="/"
           element={
             <PrivateRoute>
               <HomePage />
