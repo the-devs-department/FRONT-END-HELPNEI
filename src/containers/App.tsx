@@ -1,20 +1,36 @@
 import React from "react";
 import "../App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DashboardPage from './DashboardPage/Dashboard'
+import DashboardPage from './DashboardPage/Dashboard';
 import CadastroPage from "./CadastroPage/Cadastro";
-import HomePage from './HomePage/Home'
+import LoginPage from "./LoginPage/Login";
+import HomePage from './HomePage/Home';
+import PrivateRoute from '../components/PrivateRoute';
+import NotFound from './NotFoundPage/NotFound'; 
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CadastroPage/>}></Route>
-        <Route path="/dashboard" element={<DashboardPage/>}></Route>
-        <Route path="/home" element={<HomePage/>}></Route>
+        <Route path="/" element={<CadastroPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        
+        {/* Rota protegida */}
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Rota coringa para 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 };
- 
+
 export default App;

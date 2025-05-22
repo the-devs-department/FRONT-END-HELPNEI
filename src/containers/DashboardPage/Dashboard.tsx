@@ -50,8 +50,9 @@ const Dashboard: React.FC = () => {
 //bg-[var(--color-blue-primary)]
   return (
     <div>
-      <div className="flex justify-start">
-        <Link to="/home" className="bg-white text-left border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-3 rounded-md hover:bg-blue-50 transition">&larr; Voltar</Link>
+      <div className=" px-4 py-4">
+        <Link to="/home" className="inline-block bg-white border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-4 rounded-md hover:bg-blue-50 transition"> &larr; Voltar
+        </Link>
       </div>
       <div className="max-w-5xl w-full mx-auto p-6 pb-2 rounded-lg mt-4">
         <div className="flex flex-col items-center justify-around border-b pb-4 gap-x-6 text-center">
