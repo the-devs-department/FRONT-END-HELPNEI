@@ -35,7 +35,7 @@ const Home: React.FC = () => {
           <div className={styles.company_group}>
             {empresas.map((empresa) => (
               <Link
-                to={'/dashboard'}
+                to={`/dashboard/${empresa.sponsorId}`}
                 key={empresa.sponsorId}
                 className={`max-lg:w-[10rem] ${styles.company} shadow-lg bg-white rounded-lg w-[25rem] h-[10rem] text-center flex items-center justify-center p-4 cursor-pointer`}
               >
