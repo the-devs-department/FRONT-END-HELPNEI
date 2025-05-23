@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LogoHelpnei from '../../images/logoHelpnei.webp';
- 
+
 type FormField =
   | 'nome'
   | 'cpf'
@@ -16,10 +16,18 @@ type FormField =
   | 'complemento'
   | 'cidade'
   | 'estado';
- 
+
 const CadastroPage: React.FC = () => {
   const navigate = useNavigate();
- 
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showUfSuggestions, setShowUfSuggestions] = useState(false);
+
+
+  function removeAccents(str: string) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+
   const [formData, setFormData] = useState<Record<FormField, string>>({
     nome: '',
     cpf: '',
@@ -33,22 +41,49 @@ const CadastroPage: React.FC = () => {
     numero: '',
     complemento: '',
     cidade: '',
-    estado: 'Selecionar',
+    estado: '',
   });
- 
+
+  const [ufs, setUfs] = useState<string[]>([]);
+  const [cidades, setCidades] = useState<string[]>([]);
+
   const [formError, setFormError] = useState(false);
   const [senhaDiferente, setSenhaDiferente] = useState(false);
   const [emailDiferente, setEmailDiferente] = useState(false);
   const [emailInvalido, setEmailInvalido] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
- 
+
   useEffect(() => {
     document.body.classList.add('cadastro-body');
     return () => {
       document.body.classList.remove('cadastro-body');
     };
   }, []);
- 
+
+  useEffect(() => {
+    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
+      .then(res => res.json())
+      .then(data => {
+        const siglas = data.map((uf: any) => uf.sigla);
+        setUfs(siglas);
+      })
+      .catch(err => console.error('Erro ao buscar UFs:', err));
+  }, []);
+
+  useEffect(() => {
+    if (formData.estado) {
+      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${formData.estado}/municipios`)
+        .then(res => res.json())
+        .then(data => {
+          const nomes = data.map((cidade: any) => cidade.nome);
+          setCidades(nomes);
+        })
+        .catch(err => console.error('Erro ao buscar cidades:', err));
+    } else {
+      setCidades([]);
+    }
+  }, [formData.estado]);
+
   const formatCPF = (value: string) => {
     const numericValue = value.replace(/\D/g, '').slice(0, 11);
     return numericValue
@@ -56,30 +91,33 @@ const CadastroPage: React.FC = () => {
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
   };
- 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
- 
     let newValue = value;
- 
+
     if (name === 'cpf') newValue = formatCPF(value);
     if (name === 'nome') newValue = value.replace(/[^A-Za-zÀ-ÿ\s]/g, '');
     if (name === 'numero') newValue = value.replace(/\D/g, '');
- 
-    setFormData({ ...formData, [name as FormField]: newValue });
+
+    if (name === 'estado') {
+      setFormData({ ...formData, estado: newValue, cidade: '' });
+    } else {
+      setFormData({ ...formData, [name as FormField]: newValue });
+    }
   };
- 
-    const isEmailValid = (email: string) => {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regex.test(email);
-    };
- 
+
+  const isEmailValid = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isEmptyField = Object.values(formData).some(
       value => value.trim() === '' || value === 'Selecionar'
     );
- 
+
     if (isEmptyField) {
       setFormError(true);
       setSenhaDiferente(false);
@@ -87,7 +125,7 @@ const CadastroPage: React.FC = () => {
       setEmailInvalido(false);
       return;
     }
- 
+
     if (formData.email !== formData.confirmarEmail) {
       setEmailDiferente(true);
       setEmailInvalido(false);
@@ -95,7 +133,7 @@ const CadastroPage: React.FC = () => {
       setFormError(false);
       return;
     }
- 
+
     if (!isEmailValid(formData.email)) {
       setEmailInvalido(true);
       setEmailDiferente(false);
@@ -103,7 +141,7 @@ const CadastroPage: React.FC = () => {
       setFormError(false);
       return;
     }
- 
+
     if (formData.password !== formData.confirmarSenha) {
       setSenhaDiferente(true);
       setEmailDiferente(false);
@@ -111,30 +149,33 @@ const CadastroPage: React.FC = () => {
       setFormError(false);
       return;
     }
- 
-    // Tudo válido: envia os dados com fetch
-    try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
- 
-      if (!response.ok) {
-        throw new Error('Erro ao cadastrar usuário');
-      }
- 
-      // Sucesso: navegar para login
-      alert('Cadastro realizado com sucesso!');
-      navigate('/login');
-    } catch (error) {
-      console.error('Erro no cadastro:', error);
-      alert('Erro ao enviar dados. Tente novamente.');
+
+     try {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 409) {
+      const data = await response.json();
+      alert(data.message); 
+      return;
     }
-  };
- 
+
+    if (!response.ok) {
+      throw new Error('Erro ao cadastrar usuário');
+    }
+
+    alert('Cadastro realizado com sucesso!');
+    navigate('/login');
+
+  } catch (error) {
+    console.error('Erro no cadastro:', error);
+    alert('Erro ao enviar dados. Tente novamente.');
+  }
+};
+
   const getInputClass = (field: FormField) => {
     return `w-full bg-white border ${
       formError && (!formData[field] || formData[field] === 'Selecionar')
@@ -142,7 +183,7 @@ const CadastroPage: React.FC = () => {
         : 'border-gray-300'
     } rounded-md focus:ring focus:ring-blue-300 text-sm p-2`;
   };
- 
+
   return (
     <div className="bg-F5F5F5 text-black font-sans min-h-screen flex items-center justify-center p-6">
       <div className="bg-white max-w-2xl w-full p-6 shadow-lg rounded-lg">
@@ -245,47 +286,93 @@ const CadastroPage: React.FC = () => {
               <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
             </div>
  
-            <div className="max-[575px]:col-span-2">
-              <label className="block font-bold text-[var(--color-blue-primary)]">Cidade</label>
-              <input name="cidade" type="text" placeholder="Sua cidade" value={formData.cidade} onChange={handleChange} className={getInputClass('cidade')} />
-              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
-            </div>
- 
-            <div className="max-[575px]:col-span-2">
-              <label className="block font-bold text-[var(--color-blue-primary)]">Estado</label>
-              <select name="estado" value={formData.estado} onChange={handleChange} className={getInputClass('estado')}>
-                <option disabled value="Selecionar">Selecionar</option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-              </select>
-              <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
-            </div>
-          </div>
+            <div className="relative">
+  <label className="block font-bold text-[var(--color-blue-primary)]">Estado</label>
+  
+  <input
+    name="estado"
+    type="text"
+    placeholder="Digite ou selecione seu estado"
+    value={formData.estado}
+    onChange={(e) => {
+      handleChange(e);
+      setShowUfSuggestions(true);
+    }}
+    className={getInputClass('estado') + " w-full box-border"}
+    autoComplete="off"
+    onFocus={() => setShowUfSuggestions(true)} // Mostra todas as opções ao focar
+    onBlur={() => setTimeout(() => setShowUfSuggestions(false), 100)} // Fecha ao perder foco
+  />
+
+  {showUfSuggestions && (
+    <ul className="border border-gray-300 max-h-40 overflow-y-auto mt-1 rounded-md shadow-md bg-white z-10 absolute w-full box-border">
+      {ufs
+        .filter(uf =>
+          uf.toLowerCase().includes(formData.estado.toLowerCase())
+        )
+        .map(uf => (
+          <li
+            key={uf}
+            onClick={() => {
+              setFormData({ ...formData, estado: uf });
+              setShowUfSuggestions(false);
+            }}
+            className="cursor-pointer px-2 py-1 hover:bg-gray-200 w-full box-border"
+          >
+            {uf}
+          </li>
+        ))}
+    </ul>
+  )}
+
+  <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
+</div>
+
+
+          <div className="relative">
+          <label className="block font-bold text-[var(--color-blue-primary)]">Cidade</label>
+          
+          <input
+            name="cidade"
+            type="text"
+            placeholder="Digite ou selecione sua cidade"
+            value={formData.cidade}
+            onChange={(e) => {
+              handleChange(e);
+              setShowSuggestions(true);
+            }}
+            className={getInputClass('cidade')}
+            disabled={!formData.estado}
+            autoComplete="off"
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+          />
+
+          {formData.estado && showSuggestions && (
+            <ul className="absolute w-full border border-gray-300 max-h-40 overflow-y-auto mt-1 rounded-md shadow-md bg-white z-10">
+              {cidades
+                .filter(cidade =>
+                  removeAccents(cidade.toLowerCase())
+                    .includes(removeAccents(formData.cidade.toLowerCase()))
+                )
+                .map(cidade => (
+                  <li
+                    key={cidade}
+                    onClick={() => {
+                      setFormData({ ...formData, cidade });
+                      setShowSuggestions(false);
+                    }}
+                    className="cursor-pointer px-2 py-1 hover:bg-gray-200 w-full box-border"
+                  >
+                    {cidade}
+                  </li>
+                ))}
+            </ul>
+          )}
+
+          <hr className="border-t-4 border-[var(--color-blue-primary)] mt-2" />
+        </div>
+        </div>
  
           {formError && <div className="text-center text-red-500 font-semibold">Por favor, preencha todos os campos obrigatórios.</div>}
           {emailDiferente && <div className="text-center text-red-500 font-semibold">Os emails não coincidem.</div>}

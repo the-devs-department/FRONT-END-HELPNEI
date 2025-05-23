@@ -1,51 +1,73 @@
 import React, { useEffect, useState } from "react";
 import LogoHelpnei from '../../images/logoHelpnei.webp';
 import styles from './styles.module.css';
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-interface Company {
-  sponsorId: number;
-  highSponsorLogo: string;
-}
 
 const Home: React.FC = () => {
-  const [empresas, setEmpresas] = useState<Company[]>([]);
-
+  const [sponsors, setSponsors] = useState<any[]>([]);
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    const fetchEmpresas = async () => {
+    const fetchSponsors = async () => {
       try {
         const response = await fetch("http://localhost:3000/companies");
         const data = await response.json();
 
-        // Filtra só os que têm logo
-        const comLogo = data.filter((empresa: any) => empresa.highSponsorLogo);
-        setEmpresas(comLogo);
+        // Filtra os que têm highSponsorLogo
+        const comLogo = data.filter((sponsor: any) => sponsor.highSponsorLogo);
+        setSponsors(comLogo);
       } catch (error) {
-        console.error("Erro ao buscar empresas:", error);
+        console.error("Erro ao buscar patrocinadores:", error);
       }
     };
-
-    fetchEmpresas();
+  
+    fetchSponsors();
   }, []);
 
+  const rendaUsuario = (localStorage.getItem('renda') as 'ate1' | 'ate3' | 'mais3') || 'ate1';
+
+  const podeVerSponsor = (rendaMinima: 'ate1' | 'ate3' | 'mais3') => {
+    const prioridade = { ate1: 1, ate3: 2, mais3: 3 };
+    return prioridade[rendaUsuario] >= prioridade[rendaMinima];
+  };
+
+  const sponsorsFiltrados = sponsors.filter((sponsor) => 
+    podeVerSponsor(sponsor.rendaMinima)
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
   return (
     <>
       <div className="w-full h-full flex flex-col justify-between">
+        <button
+        onClick={handleLogout}
+        className="absolute top-4 left-4 z-50 bg-[var(--color-blue-primary)] text-white font-bold px-4 py-2 rounded-md hover:text-blue-700 transition"
+      >
+        Sair
+      </button>
         <div className="w-full h-[90%] flex flex-col items-center justify-center">
           <div className={styles.company_group}>
-            {empresas.map((empresa) => (
-              <Link
-                to={`/dashboard/${empresa.sponsorId}`}
-                key={empresa.sponsorId}
-                className={`max-lg:w-[10rem] ${styles.company} shadow-lg bg-white rounded-lg w-[25rem] h-[10rem] text-center flex items-center justify-center p-4 cursor-pointer`}
-              >
-                <img
-                  src={empresa.highSponsorLogo}
-                  alt={`Sponsor ${empresa.sponsorId}`}
-                  className={styles.company_logo}
-                />
-              </Link>
-            ))}
+            {sponsorsFiltrados.length > 0 ? (
+              sponsorsFiltrados.map((sponsor) => (
+                <Link
+                  to={'/dashboard'}
+                  key={sponsor.sponsorId}
+                  className={`max-lg:w-[10rem] ${styles.company} shadow-lg bg-white rounded-lg w-[25rem] h-[10rem] text-center flex items-center justify-center p-4 cursor-pointer`}
+                >
+                  <img
+                    src={sponsor.highSponsorLogo}
+                    alt={`Sponsor ${sponsor.sponsorId}`}
+                    className={styles.company_logo}
+                  />
+                </Link>
+              ))
+            ) : (
+              <p className="text-gray-500">Nenhum patrocinador disponível para sua renda.</p>
+            )}
           </div>
         </div>
         <footer className="flex justify-center items-center w-full h-12 fixed bottom-0 left-0 bg-blue-950 text-white py-4">

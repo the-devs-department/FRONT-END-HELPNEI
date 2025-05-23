@@ -41,8 +41,9 @@ const LoginPage: React.FC = () => {
         //Aqui será armazenado o token (localStorage)
         //para utilizar basta apenas usar -> const token = localStorage.getItem('token');
         localStorage.setItem('token', data.token);
+        localStorage.setItem('renda', data.renda)
         setLoginError('');
-        navigate('/home'); // redireciona após login válido
+        navigate('/'); // redireciona após login válido
       } else {
         setLoginError('Email ou senha inválidos.');
       }
@@ -53,16 +54,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="px-4 py-4 w-fit">
-        <Link
-          to="/"
-          className="inline-block bg-white border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-4 rounded-md hover:bg-blue-50 transition"
-        >
-          &larr; Voltar
-        </Link>
-      </div>
-
+    <div>      
       <main className="flex-grow flex justify-center items-center px-4">
         <div className="bg-white w-full max-w-md p-6 sm:p-10 shadow-lg rounded-lg">
           <h1 className="text-3xl sm:text-4xl font-bold text-center text-[var(--color-blue-primary)] mb-4">
@@ -119,6 +111,9 @@ const LoginPage: React.FC = () => {
               >
                 Entrar
               </button>
+              <div className="text-center pt-4">
+                <Link to="/cadastro" className="text-[var(--color-blue-primary)] underline font-bold rounded-md hover:text-blue-700 transition">Não sou cadastrado</Link>
+              </div>
             </div>
           </form>
         </div>

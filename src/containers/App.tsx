@@ -9,9 +9,22 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CadastroPage/>}></Route>
-        <Route path="/dashboard/:id" element={<DashboardPage/>}></Route>
-        <Route path="/home" element={<HomePage/>}></Route>
+        <Route path="/cadastro" element={<CadastroPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        
+        {/* Rota protegida */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Rota coringa para 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
