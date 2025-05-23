@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <div className=" px-4 py-4">
-        <Link to="/home" className="inline-block bg-white border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-4 rounded-md hover:bg-blue-50 transition"> &larr; Voltar
+        <Link to="/" className="inline-block bg-white border border-[var(--color-blue-primary)] text-[var(--color-blue-primary)] font-bold py-2 px-4 rounded-md hover:bg-blue-50 transition"> &larr; Voltar
         </Link>
       </div>
       <div className="max-w-5xl w-full mx-auto p-6 pb-2 rounded-lg mt-4">
