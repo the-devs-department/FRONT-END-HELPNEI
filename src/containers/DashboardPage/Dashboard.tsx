@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { animateCounters } from "../../utils/animateCounters";
 import Brazil from "@react-map/brazil";
 import { Link, useParams } from 'react-router-dom'; // Removido 'data' que não é necessário aqui
-import AmazonLogo from '../../images/amazonlogopreta.png'
 import usuarioIcon from '../../images/usuarioicon.png'
 import mapaIcon from '../../images/mapaicon.png'
 import afilioadosImg from '../../images/afiliados.png'
@@ -12,16 +11,15 @@ import linkedinIcon from '../../images/linkedin.png'
 import instaIcon from '../../images/instagram.png'
 import webIcon from '../../images/www.png'
 
-// Interfaces para os dados que vêm do backend
 interface SponsorInfos {
   sponsorId: number;
   nameSponsor: string;
   descriptionSponsor: string;
   descriptionTitle: string | null;
   exclusiveUrl: string | null;
-  facebook: string | null; // Adicionado | null novamente
-  instagram: string | null; // Adicionado | null novamente
-  linkedin: string | null; // Adicionado | null novamente
+  facebook: string | null; 
+  instagram: string | null;
+  linkedin: string | null; 
   tiktok: string | null;
   x: string | null;
   kawai: string | null;
@@ -36,18 +34,49 @@ interface CompanyData {
   sponsorInfos: SponsorInfos;
   impactedUsers: number;
   totalAffiliates: number;
-  mediumGrowth: string; // Continua como string, será convertido para number no data-count
+  mediumGrowth: string; 
   createdStores: number;
-  totalCities: number; // Corrigido para number, conforme o JSON original
+  totalCities: number; 
   cities: {
     sponsorId: number;
     [key: string]: number;
   };
 }
 
+const estados: { [key:string]:string }= {
+  "Acre": "AC",
+  "Alagoas": "AL",
+  "Amapá": "AP",
+  "Amazonas": "AM",
+  "Bahia": "BA",
+  "Ceará": "CE",
+  "Distrito Federal": "DF",
+  "Espírito Santo": "ES",
+  "Goiás": "GO",
+  "Maranhão": "MA",
+  "Mato Grosso": "MT",
+  "Mato Grosso do Sul": "MS",
+  "Minas Gerais": "MG",
+  "Pará": "PA",
+  "Paraíba": "PB",
+  "Paraná": "PR",
+  "Pernambuco": "PE",
+  "Piauí": "PI",
+  "Rio de Janeiro": "RJ",
+  "Rio Grande do Norte": "RN",
+  "Rio Grande do Sul": "RS",
+  "Rondônia": "RO",
+  "Roraima": "RR",
+  "Santa Catarina": "SC",
+  "São Paulo": "SP",
+  "Sergipe": "SE",
+  "Tocantins": "TO"
+}
+
 const Dashboard: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [citiesSelectedState, setCitiesSelectedState] = useState<number | null>(null);
   const [mapSize, setMapSize] = useState(250);
   const [companyData, setCompanyData] = useState<CompanyData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +99,7 @@ const Dashboard: React.FC = () => {
         }
         const data: CompanyData = await response.json();
         setCompanyData(data);
-
+        setCitiesSelectedState(data.totalCities)
         setTimeout(() => animateCounters(), 100);
 
       } catch (err) {
@@ -109,6 +138,11 @@ const Dashboard: React.FC = () => {
   function handleSelect(state: string): void {
     console.log("Estado selecionado:", state);
     setSelectedState(state);
+    const siglaEstado = estados[state]
+    if (companyData && companyData.cities && siglaEstado){
+      const quantidadeCidades = companyData.cities[siglaEstado]
+      setCitiesSelectedState(quantidadeCidades)
+    }
   }
 
   if (error) {
@@ -135,6 +169,7 @@ const Dashboard: React.FC = () => {
   }
 
   const { sponsorInfos, impactedUsers, totalAffiliates, mediumGrowth, createdStores, totalCities } = companyData;
+  
   return (
     <div>
       <div className="flex justify-start p-4"> 
@@ -145,7 +180,7 @@ const Dashboard: React.FC = () => {
           <img
             src={sponsorInfos.lowSponsorLogo}
             alt={sponsorInfos.nameSponsor || "Logo da Empresa"}
-            className="logo w-[200px] h-[200px] object-contain" 
+            className="logo w-[200px] h-[200px] object-contain rounded" 
           />
           <div className="flex flex-col items-center">
             <p className="text-gray-700 text-3xl leading-relaxed font-bold">{sponsorInfos.nameSponsor}</p>
@@ -225,7 +260,9 @@ const Dashboard: React.FC = () => {
           <div className='max-sm:gap-6 max-lg:flex-col
             bg-gray-100  p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative'>
             <div className='max-lg:flex-col flex flex-col items-center justify-center gap-y-4'>
-                <p className="max-sm:text-4xl max-lg:text-6xl text-gray-800 text-8xl font-bold counter" data-count={totalCities}>0</p>
+                <p className="max-sm:text-4xl max-lg:text-6xl text-gray-800 text-8xl font-bold counter" data-count={setCitiesSelectedState}>
+                  {citiesSelectedState}
+                </p>
                 <p className="max-sm:text-xl font-semibold text-2xl">CIDADES ATINGIDAS</p>
                 <p className="text-lg text-[#143357] font-bold">Estado: {selectedState ? selectedState : "--"}</p>
               </div>
