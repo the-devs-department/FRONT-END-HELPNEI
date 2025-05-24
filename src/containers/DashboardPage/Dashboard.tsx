@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { animateCounters } from "../../utils/animateCounters";
 import Brazil from "@react-map/brazil";
-import { Link, useParams } from 'react-router-dom'; // Removido 'data' que não é necessário aqui
+import { Link, useParams } from 'react-router-dom';
 import usuarioIcon from '../../images/usuarioicon.png'
 import mapaIcon from '../../images/mapaicon.png'
 import afilioadosImg from '../../images/afiliados.png'
@@ -17,9 +17,9 @@ interface SponsorInfos {
   descriptionSponsor: string;
   descriptionTitle: string | null;
   exclusiveUrl: string | null;
-  facebook: string | null; 
+  facebook: string | null;
   instagram: string | null;
-  linkedin: string | null; 
+  linkedin: string | null;
   tiktok: string | null;
   x: string | null;
   kawai: string | null;
@@ -34,16 +34,16 @@ interface CompanyData {
   sponsorInfos: SponsorInfos;
   impactedUsers: number;
   totalAffiliates: number;
-  mediumGrowth: string; 
+  mediumGrowth: string;
   createdStores: number;
-  totalCities: number; 
+  totalCities: number;
   cities: {
     sponsorId: number;
     [key: string]: number;
   };
 }
 
-const estados: { [key:string]:string }= {
+const estados: { [key: string]: string } = {
   "Acre": "AC",
   "Alagoas": "AL",
   "Amapá": "AP",
@@ -80,42 +80,49 @@ const Dashboard: React.FC = () => {
   const [mapSize, setMapSize] = useState(250);
   const [companyData, setCompanyData] = useState<CompanyData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [submittedCompanyId, setSubmittedCompanyId] = useState<string | null>(null);
+  const [isThisCompanySubmitted, setIsThisCompanySubmitted] = useState<boolean>(false);
 
-  // Primeiro useEffect para buscar os dados da empresa
   useEffect(() => {
     const fetchCompanyData = async () => {
-      setError(null);   // Limpa qualquer erro anterior
-
+      setError(null);
       if (!id) {
         setError("ID da empresa não fornecido na URL.");
         return;
       }
 
+      const storedSubmittedId = localStorage.getItem('submittedCompanyId');
+      if (storedSubmittedId) {
+        setSubmittedCompanyId(storedSubmittedId);
+        if (storedSubmittedId === id) {
+          setIsThisCompanySubmitted(true);
+        } else {
+          setIsThisCompanySubmitted(false);
+        }
+      } else {
+        setSubmittedCompanyId(null);
+        setIsThisCompanySubmitted(false);
+      }
+
       try {
         const response = await fetch(`http://localhost:3000/dashboard/${id}`);
-
         if (!response.ok) {
           throw new Error(`Erro ao buscar dados da empresa: ${response.statusText}`);
         }
         const data: CompanyData = await response.json();
         setCompanyData(data);
-        setCitiesSelectedState(data.totalCities)
+        setCitiesSelectedState(data.totalCities);
         setTimeout(() => animateCounters(), 100);
-
       } catch (err) {
         console.error(`Erro ao carregar os detalhes da empresa de id ${id}:`, err);
         setError("Não foi possível carregar os detalhes desta empresa.");
-      } 
+      }
     };
+    fetchCompanyData();
+  }, [id]);
 
-    fetchCompanyData(); 
-
-  }, [id]); 
-
-  
   useEffect(() => {
     document.body.classList.add('dashboard-body');
-
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         setMapSize(140);
@@ -127,24 +134,71 @@ const Dashboard: React.FC = () => {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); 
-
+    handleResize();
     return () => {
       document.body.classList.remove('dashboard-body');
       window.removeEventListener("resize", handleResize);
     };
-  }, []); 
+  }, []);
 
   function handleSelect(state: string): void {
     console.log("Estado selecionado:", state);
     setSelectedState(state);
     const siglaEstado = estados[state]
-    if (companyData && companyData.cities && siglaEstado){
+    if (companyData && companyData.cities && siglaEstado) {
       const quantidadeCidades = companyData.cities[siglaEstado]
       setCitiesSelectedState(quantidadeCidades)
     }
   }
 
+  function handleSponsorButtonClick() {
+    const confirmacao = confirm(`Confirmar solicitação de patrocinio para ${sponsorInfos.nameSponsor}?`)
+    if (confirmacao){
+      if (id) {
+        localStorage.setItem('submittedCompanyId', id);
+        setSubmittedCompanyId(id);
+        setIsThisCompanySubmitted(true);
+      }
+    }
+  }
+
+  function handleCancelSolicitationClick() {
+    const confirmacao = confirm(`Cancelar solicitação de patrocinio para ${sponsorInfos.nameSponsor}?`)
+    if (confirmacao){
+      localStorage.removeItem('submittedCompanyId');
+      setSubmittedCompanyId(null);
+      setIsThisCompanySubmitted(false);
+    }
+  }
+  const isSponsorButtonDisabled = submittedCompanyId !== null && submittedCompanyId !== id;
+
+  let buttonContent;
+
+  if (isThisCompanySubmitted) {
+    buttonContent = (
+      <button
+        onClick={handleCancelSolicitationClick}
+        className=" border-2 border-red-600 p-2 rounded bg-red-600 text-white text-lg transition duration-300 ease-in-out
+          hover:bg-red-700"> Cancelar solicitação
+      </button>
+    );
+  } else {
+    const buttonClasses = `
+      border-2 p-2 rounded text-lg transition duration-300 ease-in-out
+      ${isSponsorButtonDisabled
+        ? 'border-gray-300 bg-gray-100 text-gray-500 cursor-not-allowed'
+        : 'border-green-600 bg-green-600 text-white hover:bg-green-700'
+      }
+    `;
+    buttonContent = (
+      <button
+        onClick={handleSponsorButtonClick}
+        disabled={isSponsorButtonDisabled}
+        className={buttonClasses}>
+        Quero ser patrocinado
+      </button>
+    );
+  }
   if (error) {
     return (
       <div className="flex flex-col justify-center items-center h-screen bg-red-50 text-red-700">
@@ -169,7 +223,7 @@ const Dashboard: React.FC = () => {
   }
 
   const { sponsorInfos, impactedUsers, totalAffiliates, mediumGrowth, createdStores, totalCities } = companyData;
-  
+
   return (
     <div>
       <div className=" px-4 py-4">
@@ -181,13 +235,16 @@ const Dashboard: React.FC = () => {
           <img
             src={sponsorInfos.lowSponsorLogo}
             alt={sponsorInfos.nameSponsor || "Logo da Empresa"}
-            className="logo w-[200px] h-[200px] object-contain rounded" 
+            className="logo w-[200px] h-[200px] object-contain rounded"
           />
           <div className="flex flex-col items-center">
             <p className="text-gray-700 text-3xl leading-relaxed font-bold">{sponsorInfos.nameSponsor}</p>
-            <p className="text-gray-700 text-1xl leading-relaxed pb-3 text-justify">
-              {sponsorInfos.descriptionSponsor}
-            </p>
+            <div className="flex flex-col items-center">
+              <p className="text-gray-700 text-1xl leading-relaxed pb-3 text-justify">
+                {sponsorInfos.descriptionSponsor}
+              </p>
+              {buttonContent}
+            </div>
           </div>
         </div>
         <h2 className="text-2xl font-bold mt-6 text-center border-b pb-6">IMPACTO DA EMPRESA</h2>
@@ -259,27 +316,27 @@ const Dashboard: React.FC = () => {
             <div className="absolute bottom-3 left-3 right-3 h-1 bg-blue-950 rounded-full"></div>
           </div>
           <div className='max-sm:gap-6 max-lg:flex-col
-            bg-gray-100  p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative'>
+            bg-gray-100 p-6 rounded-lg shadow-md text-center justify-around flex items-center col-span-2 relative'>
             <div className='max-lg:flex-col flex flex-col items-center justify-center gap-y-4'>
-                <p className="max-sm:text-4xl max-lg:text-6xl text-gray-800 text-8xl font-bold counter" data-count={setCitiesSelectedState}>
-                  {citiesSelectedState}
-                </p>
-                <p className="max-sm:text-xl font-semibold text-2xl">CIDADES ATINGIDAS</p>
-                <p className="text-lg text-[#143357] font-bold">Estado: {selectedState ? selectedState : "--"}</p>
-              </div>
-              <div className="absolute top-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
-              <Brazil
-                  onSelect={(state) => handleSelect(state as string)}
-                  size={mapSize}
-                  mapColor="#143357"
-                  strokeColor="white"
-                  hoverColor="#B107"
-                  type="select-single"
-                  selectColor="#B1070A"
-                  hints={true}
-                />
-              <div className="absolute bottom-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
+              <p className="max-sm:text-4xl max-lg:text-6xl text-gray-800 text-8xl font-bold counter" data-count={setCitiesSelectedState}>
+                {citiesSelectedState}
+              </p>
+              <p className="max-sm:text-xl font-semibold text-2xl">CIDADES ATINGIDAS</p>
+              <p className="text-lg text-[#143357] font-bold">Estado: {selectedState ? selectedState : "--"}</p>
             </div>
+            <div className="absolute top-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
+            <Brazil
+              onSelect={(state) => handleSelect(state as string)}
+              size={mapSize}
+              mapColor="#143357"
+              strokeColor="white"
+              hoverColor="#B107"
+              type="select-single"
+              selectColor="#B1070A"
+              hints={true}
+            />
+            <div className="absolute bottom-3 left-3 right-3 h-1 bg-gray-700 rounded-full"></div>
+          </div>
         </div>
         <div className="social flex items-center justify-center pt-4 gap-x-12 col-span-2">
           {sponsorInfos.linkedin && (

@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './DashboardPage/Dashboard';
 import CadastroPage from "./CadastroPage/Cadastro";
 import HomePage from './HomePage/Home';
+import PrivateRoute from "../components/PrivateRoute";
+import LoginPage from "./LoginPage/Login";
+import NotFound from "./NotFoundPage/NotFound";
 
 const App: React.FC = () => {
   return (
@@ -11,7 +14,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/cadastro" element={<CadastroPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/:id" element={<DashboardPage />} />
         
         {/* Rota protegida */}
         <Route
