@@ -54,7 +54,7 @@ const Home: React.FC = () => {
             {sponsorsFiltrados.length > 0 ? (
               sponsorsFiltrados.map((sponsor) => (
                 <Link
-                  to={'/dashboard'}
+                  to={`/dashboard/${sponsor.sponsorId}`}
                   key={sponsor.sponsorId}
                   className={`max-lg:w-[10rem] ${styles.company} shadow-lg bg-white rounded-lg w-[25rem] h-[10rem] text-center flex items-center justify-center p-4 cursor-pointer`}
                 >
